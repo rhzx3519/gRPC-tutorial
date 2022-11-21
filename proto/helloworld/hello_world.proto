@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option go_package = "github.com/myuser/myrepo/pkg/apiclient/helloworld";
+//option go_package = "./;helloworld";
+package helloworld;
+
+import "google/api/annotations.proto";
+import "timestamp/timestamp.proto";
+
+// Here is the overall greeting service definition where we define all our endpoints
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      post: "/v1/example/echo"
+      body: "*"
+    };
+  }
+}
+
+// The request message containing the user's name
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+  timestamp.Timestamp timestamp = 2;
+}

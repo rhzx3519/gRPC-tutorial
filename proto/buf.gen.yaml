@@ -1,0 +1,25 @@
+# https://developers.google.com/protocol-buffers/docs/reference/go-generated
+#  1. If the paths=import flag is specified, the output file is placed in a directory named after the Go package's import path.
+#  For example, an input file protos/buzz.proto with a Go import path of example.com/project/protos/fizz results in an
+#  output file at example.com/project/protos/fizz/buzz.pb.go. This is the default output mode if a paths flag is not specified.
+
+#  2. If the module=$PREFIX flag is specified, the output file is placed in a directory named after the Go package's import path,
+#  but with the specified directory prefix removed from the output filename. For example, an input file protos/buzz.proto
+#  with a Go import path of example.com/project/protos/fizz and example.com/project specified as the module prefix results
+#  in an output file at protos/fizz/buzz.pb.go. Generating any Go packages outside the module path results in an error.
+#  This mode is useful for outputting generated files directly into a Go module.
+
+#  3. If the paths=source_relative flag is specified, the output file is placed in the same relative directory as the input
+#  file. For example, an input file protos/buzz.proto results in an output file at protos/buzz.pb.go.
+
+version: v1
+plugins:
+  - name: go
+    out: ..
+    opt: module=github.com/myuser/myrepo
+  - name: go-grpc
+    out: ..
+    opt: module=github.com/myuser/myrepo,require_unimplemented_servers=false
+  - name: grpc-gateway
+    out: ..
+    opt: module=github.com/myuser/myrepo

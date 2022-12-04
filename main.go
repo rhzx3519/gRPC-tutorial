@@ -8,26 +8,13 @@ import (
 	"context"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	helloworldpb "github.com/myuser/myrepo/pkg/apiclient/helloworld"
-	"github.com/myuser/myrepo/pkg/apiclient/timestamppb"
+	"github.com/myuser/myrepo/server/helloworld"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"net"
 	"net/http"
-	"time"
 )
-
-type server struct {
-	helloworldpb.UnimplementedGreeterServer
-}
-
-func NewServer() *server {
-	return &server{}
-}
-
-func (s *server) SayHello(ctx context.Context, in *helloworldpb.HelloRequest) (*helloworldpb.HelloReply, error) {
-	return &helloworldpb.HelloReply{Message: in.Name + " world", Timestamp: &timestamppb.Timestamp{Seconds: int64(time.Now().Second())}}, nil
-}
 
 func main() {
 	// Create a listener on TCP port
@@ -39,7 +26,7 @@ func main() {
 	// Create a gRPC server object
 	s := grpc.NewServer()
 	// Attach the Greeter service to the server
-	helloworldpb.RegisterGreeterServer(s, NewServer())
+	helloworldpb.RegisterGreeterServer(s, helloworld.NewServer())
 	// Serve gRPC server
 	log.Println("Serving gRPC on 0.0.0.0:8080")
 	go func() {

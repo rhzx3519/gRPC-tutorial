@@ -14,13 +14,9 @@ import (
 	"time"
 )
 
-const (
-	defaultName = "world"
-)
-
 var (
 	addr = flag.String("addr", "localhost:8080", "the address to connect to")
-	name = flag.String("name", defaultName, "Name to greet")
+	name = flag.String("name", "hello", "Name to greet")
 )
 
 func main() {
@@ -32,7 +28,7 @@ func main() {
 	}
 	defer conn.Close()
 	c := helloworldpb.NewGreeterClient(conn)
-	
+
 	// Contact the server and print out its response.
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
